@@ -1,0 +1,11 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/lib/db/prisma";
+
+export async function GET() {
+  const projects = await prisma.project.findMany({
+    where: { published: true },
+    orderBy: [{ featured: "desc" }, { updatedAt: "desc" }]
+  });
+
+  return NextResponse.json(projects);
+}
