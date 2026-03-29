@@ -9,7 +9,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <div className="space-y-4">
         <div className="flex items-center justify-between gap-4">
           <Badge>{project.featured ? "Featured" : "Project"}</Badge>
-          <Link href={`/projects/${project.slug}`} className="text-sm font-semibold text-ember">
+          <Link href={`/projects/${project.slug}` as any} className="text-sm font-semibold text-ember">
             View case study
           </Link>
         </div>

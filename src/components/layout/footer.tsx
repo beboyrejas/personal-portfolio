@@ -12,7 +12,7 @@ export function Footer() {
             <p className="text-sm leading-7 text-ink/70">{siteConfig.description}</p>
           </div>
           <div className="flex flex-col gap-2 text-sm text-ink/70">
-            <Link href={`mailto:${siteConfig.email}`}>{siteConfig.email}</Link>
+            <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
             <p>Building polished product experiences with a strong engineering backbone.</p>
           </div>
         </div>

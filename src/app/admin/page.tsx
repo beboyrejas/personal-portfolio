@@ -37,9 +37,10 @@ export default async function AdminDashboardPage() {
           <div className="grid gap-6 md:grid-cols-3">
             {stats.map((item) => (
               <Link
-  key={item.label}
-  href={item.href as "/admin/projects" | "/admin/blog" | "/admin/messages"}
-  className="rounded-[2rem] bg-white p-8 shadow-card">
+                key={item.label}
+                href={item.href as "/admin/projects" | "/admin/blog" | "/admin/messages"}
+                className="rounded-[2rem] bg-white p-8 shadow-card"
+              >
                 <p className="text-sm uppercase tracking-[0.25em] text-ink/50">{item.label}</p>
                 <p className="mt-4 font-display text-5xl text-ink">{item.value}</p>
               </Link>

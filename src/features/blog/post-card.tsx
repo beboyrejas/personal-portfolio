@@ -13,7 +13,7 @@ export function PostCard({ post }: { post: Post }) {
           <h3 className="font-display text-2xl text-ink">{post.title}</h3>
           <p className="leading-7 text-ink/70">{post.excerpt}</p>
         </div>
-        <Link href={`/blog/${post.slug}`} className="text-sm font-semibold text-pine">
+        <Link href={`/blog/${post.slug}` as any} className="text-sm font-semibold text-pine">
           Read article
         </Link>
       </div>
