@@ -3,15 +3,14 @@ import Credentials from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import type { NextAuthConfig } from "next-auth";
 import { prisma } from "@/lib/db/prisma";
+import { sharedAuthConfig } from "@/lib/auth/shared-config";
 import { loginSchema } from "@/lib/validators/auth";
 
 export const authConfig: NextAuthConfig = {
+  ...sharedAuthConfig,
   adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt"
-  },
-  pages: {
-    signIn: "/admin/login"
   },
   providers: [
     Credentials({
@@ -70,21 +69,7 @@ export const authConfig: NextAuthConfig = {
     })
   ],
   callbacks: {
-    authorized({ auth, request }) {
-      const isLoggedIn = !!auth?.user;
-      const isAdminArea = request.nextUrl.pathname.startsWith("/admin");
-      const isLoginPage = request.nextUrl.pathname === "/admin/login";
-
-      if (isAdminArea && !isLoginPage) {
-        return isLoggedIn;
-      }
-
-      if (isLoginPage && isLoggedIn) {
-        return Response.redirect(new URL("/admin", request.nextUrl));
-      }
-
-      return true;
-    },
+    ...sharedAuthConfig.callbacks,
     session({ session, token }) {
       if (session.user) {
         session.user.id = typeof token.sub === "string" ? token.sub : "";

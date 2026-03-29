@@ -43,7 +43,7 @@ async function main() {
       excerpt: "Operational dashboard surfacing product and revenue trends.",
       description:
         "An internal analytics platform that turns fragmented data into actionable reporting through clear KPIs, cohort views, and trend monitoring.",
-      stack: "Next.js, Prisma, SQLite, Charting",
+      stack: "Next.js, Prisma, PostgreSQL, Charting",
       repository: "https://github.com/example/analytics-pulse",
       featured: true,
       published: true
