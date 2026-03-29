@@ -1,6 +1,7 @@
 import type { NextAuthConfig } from "next-auth";
 
 export const sharedAuthConfig = {
+  providers: [],
   pages: {
     signIn: "/admin/login"
   },
@@ -21,4 +22,4 @@ export const sharedAuthConfig = {
       return true;
     }
   }
-} satisfies Pick<NextAuthConfig, "pages" | "callbacks">;
+} satisfies Pick<NextAuthConfig, "providers" | "pages" | "callbacks">;
