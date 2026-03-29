@@ -27,26 +27,45 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
 
-        const user = await prisma.user.findUnique({
-          where: { email: parsed.data.email }
-        });
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: parsed.data.email }
+          });
 
-        if (!user) {
-          return null;
+          if (user) {
+            const isValid = await bcrypt.compare(parsed.data.password, user.passwordHash);
+
+            if (isValid) {
+              return {
+                id: user.id,
+                email: user.email,
+                name: user.name,
+                role: user.role
+              };
+            }
+          }
+        } catch (error) {
+          console.error("Database auth lookup failed, falling back to env admin credentials.", error);
         }
 
-        const isValid = await bcrypt.compare(parsed.data.password, user.passwordHash);
+        const envAdminEmail = process.env.ADMIN_EMAIL;
+        const envAdminPassword = process.env.ADMIN_PASSWORD;
 
-        if (!isValid) {
-          return null;
+        if (
+          envAdminEmail &&
+          envAdminPassword &&
+          parsed.data.email === envAdminEmail &&
+          parsed.data.password === envAdminPassword
+        ) {
+          return {
+            id: "env-admin",
+            email: envAdminEmail,
+            name: "Admin",
+            role: "ADMIN"
+          };
         }
 
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          role: user.role
-        };
+        return null;
       }
     })
   ],
